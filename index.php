@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -12,6 +17,26 @@
 
     <body>
     <?php include_once 'header.php'; ?>
+    <?php
+          if(isset($_GET['login_err']))
+            {
+              $err = htmlspecialchars($_GET['login_err']);
+
+                  switch($err)
+                  {
+                  case 'password' :
+                  ?>
+                    <p><strong>Erreur</strong> Mot de passe incorrect !</p>
+                  <?php
+                  break;
+                  case 'username' :
+                  ?>
+                    <p><strong>Erreur</strong> Compte introuvable !</p>
+                  <?php
+                  break;
+                  }
+            }
+            ?>
         <!--formulaire de connexion-->
         <form method="post" action="index.php">
           <fieldset>
@@ -29,6 +54,8 @@
           </fieldset>
         </form>
 
+        
     </body>
+    
     <?php include_once 'footer.php'; ?>
 </html>
