@@ -33,11 +33,11 @@ session_start();
       }
       else
       {
-        $username = $_SESSION['username'];
-        //$password_hach = password_hash($new_password, PASSWORD_DEFAULT);
+        $username =$_SESSION['username'];
+        $hash = password_hash($new_password, PASSWORD_DEFAULT);
         $sqlQuery=('UPDATE account SET password = :password WHERE username = :username') ; 
         $update=$db->prepare ($sqlQuery);
-        $update->execute(array ('password'=> $new_password, 'username'=> $username));
+        $update->execute(array ('password'=> $hash, 'username'=> $username));
         echo 'Le mot de passe a été réinitialisé avec succès ' ;
       }
     
