@@ -18,6 +18,25 @@ include 'dbb_connexion.php';
 
   <body>
   <?php include_once 'header.php'; ?>
+  <?php
+        if(isset($_GET['forgot_err']))
+        {
+          $err = htmlspecialchars($_GET['forgot_err']);
+            switch($err)
+            {
+            case 'wrong_answer':
+              ?>
+              <p><strong>Erreur</strong> Les données saisies ne sont pas correctes !</p>
+              <?php
+            break;
+            case 'username' :
+              ?>
+              <p><strong>Erreur</strong> Compte introuvable !</p>
+              <?php
+            break;
+            }            
+        }
+        ?>
         <!--formulaire récupération mot de passe-->
         <form method="post" action="forgot_password_traitement.php">
           <fieldset>
