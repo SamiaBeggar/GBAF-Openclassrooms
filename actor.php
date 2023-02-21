@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 <!DOCTYPE html>
 
@@ -16,7 +16,7 @@
 
 <body>
 <?php include 'dbb_connexion.php'; ?>
-<section>
+<?php include 'header_log.php' ; ?>
 
 <div class="actor_details">
 <?php 
@@ -34,6 +34,7 @@
 <!-- afficher les données de l'acteur --> 
 <img src="<?php echo $actor['logo']; ?>" alt= "Logo partenaires" ?>
 <h2><?php echo $actor['acteur']; ?></h2>
+<a href="#">Visiter le site de <?php echo $actor['acteur'];?></a><br>
 <p><?php echo  nl2br ($actor['description'] ) ;?></p>
 </section>
 
@@ -51,7 +52,7 @@
   {
 ?> 
     <div class="comments_number">
-    <h3><?php echo $nbPost ['nb_post']; ?> Commentaire(s)</h3>
+    <h4><?php echo $nbPost ['nb_post']; ?> Commentaire(s)</h4>
     </div>
     <?php
   }
@@ -59,19 +60,33 @@
 
    <!--ajouter un commentaire-->
     <?php
-    $sqlQuery='SELECT * FROM post WHERE id_user = ? AND id_acteur = ?';
+    $id_user= $_SESSION['id_user'];
+    $sqlQuery='SELECT * FROM post WHERE id_user = :id_user AND id_acteur = :id_acteur';
     $result= $db->prepare($sqlQuery);
-    $result -> execute (array('id_user' => $_SESSION['id_user'], 'id_acteur' => $_GET['id_acteur']));
+    $result->execute (array(':id_user'=> $id_user, ':id_acteur'=> $id));
     $data_comments= $result ->fetch();
-       /* si aucun commentaire laissé par cet user pour cet acteur */
-    if (!$data_comments) 
-
     ?>
-    <div id="new_comment_button">
-      <a href="actor_comments_traitement.php?id_acteur=<?php echo $_GET['id_acteur']; ?>">
-      <p> Nouveau commentaire</p>
-      </a>
-    </div> 
+
+    <?php
+       if ($data_comments)
+       {
+      ?>
+      <div class="already_comments">
+      <?php echo " Vous avez déjà publié un commentaire pour cet acteur "; ?>  
+      </div> 
+      <?php
+      } 
+      else 
+      {
+       ?>
+       <div class="new_comments">
+        <a href="actor_comments_new.php?id=<?php echo $actor['id_acteur']; ?>">
+        <p> Nouveau commentaire </p>
+        </a>
+        <?php
+    }
+    ?>
+    
 
     <div class="votes">
      <!-- nombre des likes , dislikes pour l'acteur -->
@@ -80,7 +95,7 @@
      $id = $_GET['id'];
      $sqlQuery = 'SELECT * FROM vote WHERE id_acteur=? AND vote=1'; 
      $likes= $db->prepare($sqlQuery);
-     $likes->execute(array($_GET['id']));
+     $likes->execute(array($id));
      $nbLikes = $likes-> rowCount();
        /* vote=2: DISLIKE */
      $sqlQuery = 'SELECT * FROM vote WHERE id_acteur = ? AND vote =2';
@@ -88,75 +103,24 @@
      $dislikes->execute(array($_GET['id']));
      $nbDislikes= $dislikes-> rowCount();
      ?>
-     <div id="like_dislike_button_content">
-     <?php
-      /* les valeurs likes, dislikes pour user acteur  */
-     $result = $db -> prepare('SELECT * FROM vote WHERE id_acteur = :id_acteur AND id_user = :id_user AND vote = 1');
-     $result -> execute(array(
-      'id_acteur' => $_GET['id_acteur'],
-      'id_user' => $_SESSION['id_user']));
-     $likes = $result -> fetch();
+     
+       <!-- formulaire de vote  -->
+      <form method="post" action= "votes_traitement.php" >
 
-      $result = $db -> prepare('SELECT * FROM vote WHERE id_acteur = :id_acteur AND id_user = :id_user AND vote = 2');
-      $result -> execute(array(
-        'id_acteur' => $_GET['id_acteur'],
-        'id_user' => $_SESSION['id_user']));
-      $dislikes = $result -> fetch();
+       <span class="vote_count"><?php echo $nbLikes - $nbDislikes; ?></span> 
 
-      ?>
-     <?php
+        <input type=hidden name="id_acteur" value ="<?php echo $id; ?>">
+        <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+        <button class="like" type="submit" name="vote" value="1">
+          <i id="id_like" class="fa fa-thumbs-up" style="font-size:22px"></i>
+        </button>
 
-      if ($likes != 0)
-      {
-      ?>
-      <div class="like_button">
-       <a href="actor_likes_dislikes_traitement.php?id_acteur=<?php echo $_GET['id_acteur']; ?>&likes_dislikes=1">
-       <p> <?php echo $nbLikes; ?> </p>
-       <img src="............"> <!-- A ajouter-->
-       </a>
-      </div>
+        <button class="dislike" type="submit" name="vote" value="2">
+          <i id="id_dislike" class="fa fa-thumbs-down" style="font-size:22px"></i>
+        </button> 
+      </form>
 
-      <?php
-      }
-       else
-      {
-      ?>
-      <div class="like_button">
-        <a href="actor_likes_dislikes_traitement.php?id_acteur=<?php echo $_GET['id_acteur']; ?>&likes_dislikes=1">
-        <p><?php echo $nbLikes; ?></p>
-        <img src="........"> <!-- A ajouter-->
-        </a>
-      </div>
 
-      <?php
- 
-       }
-       ?>
-
-      <?php
-      if ($dislikes != 0)
-      {
-      ?>
-      <div class="dislike_button">
-        <a href="actor_likes_dislikes_traitement.php?id_acteur=<?php echo $_GET['id_acteur']; ?>&likes_dislikes=2">
-        <p> <?php echo $nbDislikes; ?> </p>
-        <img src="........."> <!-- A ajouter-->
-        </a>
-        </div>
-       <?php
-       }
-        else
-       {
-       ?>
-       <div class="dislike_button">
-       <a href="actor_likes_dislikes_traitement.php?id_acteur=<?php echo $_GET['id_acteur']; ?>&likes_dislikes=2">
-        <p> <?php echo $nbDislikes; ?> </p>
-        <img src="........."> <!-- A ajouter-->
-        </a>
-        </div>
-      <?php
-      }
-      ?>
 
       <!-- Afficher les commentaires laissés par les autres users-->
       <div class="other_comments">
@@ -164,16 +128,15 @@
 
         $sqlQuery=('SELECT * FROM post INNER JOIN account ON post.id_user = account.id_user WHERE id_acteur = :id_acteur ORDER BY date_add DESC LIMIT 3');
         $query = $db -> prepare ($sqlQuery);
-        $query -> execute(array('id_acteur' => $_GET['id_acteur']));
+        $query -> execute(array('id_acteur' => $id));
         while ($data_comment = $query -> fetch())
         {
         ?>
-         <div class="comment_content_container">
+         
          <p> <?php echo($data_comment['prenom']); ?> </p>
          <p> <?php echo $data_comment['date_add']; ?> </p>
          <p> <?php echo nl2br($data_comment['post']); ?> </p>
-          
-         </div>
+      
         <?php
         }
         ?>
