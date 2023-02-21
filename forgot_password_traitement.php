@@ -26,7 +26,7 @@ if(isset($_POST['username']) && isset($_POST['question']) && isset($_POST['repon
             
         
 
-        }else header('Location: forgot_password.php?login_err=wrong_answer');
+        }else header('Location: forgot_password.php?forgot_err=wrong_answer');
 
     }else header('Location: forgot_password.php?forgot_err=username');
 
