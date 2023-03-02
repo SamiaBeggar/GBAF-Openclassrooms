@@ -4,6 +4,7 @@
 
 <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>GBAF-Partenaires</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -18,8 +19,8 @@
 <section id="actor_details">
 
 <?php 
+$id = (isset($_GET['id']) ) ? $_GET['id'] : $_POST['id_acteur'];
 
-  $id = $_GET['id'];
   if(isset($id) && !empty($id))
 {
   //récupérer les données de chaque acteur 
@@ -45,7 +46,7 @@
 <div class= "comments_option">
 <?php
 // nombre des commentaires
- $id = $_GET['id'];
+ 
   $sqlQuery = 'SELECT COUNT(*) AS nb_post FROM post WHERE id_acteur = ?';
   $commentsQuery = $db->prepare($sqlQuery);
   $commentsQuery->execute(array($id));
@@ -91,16 +92,10 @@
       }
       ?>
 
-
-
-
-
-
-   
      <!-- nombre des likes , dislikes pour l'acteur -->
       <!--vote=1 : LIKE-->
      <?php
-     $id = $_GET['id'];
+    
      $sqlQuery = 'SELECT * FROM vote WHERE id_acteur=? AND vote=1'; 
      $likes= $db->prepare($sqlQuery);
      $likes->execute(array($id));
@@ -108,7 +103,7 @@
        /* vote=2: DISLIKE */
      $sqlQuery = 'SELECT * FROM vote WHERE id_acteur = ? AND vote =2';
      $dislikes = $db->prepare($sqlQuery);
-     $dislikes->execute(array($_GET['id']));
+     $dislikes->execute(array($id));
      $nbDislikes= $dislikes-> rowCount();
      ?>
     
@@ -143,20 +138,10 @@ $data=$sql->fetch();
 </form>
     </div>
 <?php
-if  (!$data)
-{
-  $id = $_GET['id'];
-}
-
 
 if (isset($_POST['vote'])) {
   $vote = $_POST['vote'];
   $id_user= $_SESSION['id_user'];
-  $id = $_GET['id'];
-//$id = $_POST['id_acteur'];
-//$id = $_GET['id'];
-//$id_user= $_SESSION['id_user'];
-//$vote = $_POST['vote'];
 $sqlQuery= 'INSERT INTO vote ( id_user, id_acteur, vote) VALUES (:id_user, :id_acteur, :vote)' ; 
 $sql=$db->prepare($sqlQuery);
 $sql->execute(array(
@@ -176,7 +161,7 @@ $sql->execute(array(
       
       <?php
 
-        $sqlQuery=('SELECT * FROM post INNER JOIN account ON post.id_user = account.id_user WHERE id_acteur = :id_acteur ORDER BY date_add DESC LIMIT 3');
+        $sqlQuery=('SELECT account.prenom, post.id_post, post.id_user, post.post, DATE_FORMAT(date_add, \'%d/%m/%Y \') AS french_date FROM post INNER JOIN account ON post.id_user = account.id_user WHERE id_acteur = :id_acteur ORDER BY date_add DESC LIMIT 3');
         $query = $db -> prepare ($sqlQuery);
         $query -> execute(array('id_acteur' => $id));
         while ($data_comment = $query -> fetch())
@@ -184,7 +169,7 @@ $sql->execute(array(
         ?>
          <div class="other_comments">
          <p> <?php echo($data_comment['prenom']); ?> </p>
-         <p> <?php echo $data_comment['date_add']; ?> </p>
+         <p> <?php echo $data_comment['french_date']; ?> </p>
          <p> <?php echo nl2br($data_comment['post']); ?> </p>
          </div>
         <?php
