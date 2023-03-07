@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<html lang="fr">
 
-<html>
+
 
 <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width, initial-scale=1" >
         <title>GBAF-Partenaires</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -25,14 +26,14 @@ $id = (isset($_GET['id']) ) ? $_GET['id'] : $_POST['id_acteur'];
 {
   //récupérer les données de chaque acteur 
       $sqlQuery = 'SELECT * FROM acteurs WHERE id_acteur = ?';
-      $actorsQuery= $db -> prepare( $sqlQuery);
+      $actorsQuery= $db->prepare( $sqlQuery);
       $actorsQuery->execute(array($id));
       $actor = $actorsQuery->fetch();
 }
 ?>
 <!-- afficher les données de l'acteur --> 
 
-<img src="<?php echo $actor['logo']; ?>" alt= "Logo partenaire" ?>
+<img src="<?php echo $actor['logo']; ?>" alt= "Logo partenaire" > 
 
 <h2><?php echo $actor['acteur']; ?></h2>
 <a href="#">Visiter le site de <?php echo $actor['acteur'];?></a><br>
@@ -43,7 +44,7 @@ $id = (isset($_GET['id']) ) ? $_GET['id'] : $_POST['id_acteur'];
 
 
 <section id="comments_container">
-<div class= "comments_option">
+  <div id="data">
 <?php
 // nombre des commentaires
  
@@ -129,11 +130,11 @@ $data=$sql->fetch();
  <input type=hidden name="id_acteur" value ="<?php echo $id; ?>">
  <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
  <button class="like" type="submit" name="vote" value="1" <?php if($data) echo "disabled"; ?> >
-   <i id="id_like" class="fa fa-thumbs-up" style="font-size:22px"></i>
+   <i id="id_like" class="fa fa-thumbs-up" style="font-size:35px"></i>
  </button>
  <span class="vote_count"><?php echo $nbDislikes ; ?></span> 
  <button class="dislike" type="submit" name="vote" value="2" <?php if($data) echo "disabled"; ?> >
-   <i id="id_dislike" class="fa fa-thumbs-down" style="font-size:22px"></i>
+   <i id="id_dislike" class="fa fa-thumbs-down" style="font-size:35px"></i>
  </button> 
 </form>
     </div>
@@ -149,10 +150,11 @@ $sql->execute(array(
    ':id_acteur' => $id,
     ':vote' => $vote
 ));
+header('Location: actor.php?id=' . $id);
 }
 ?>
 
-
+</div>
 
 
 
@@ -170,7 +172,7 @@ $sql->execute(array(
          <div class="other_comments">
          <p> <?php echo($data_comment['prenom']); ?> </p>
          <p> <?php echo $data_comment['french_date']; ?> </p>
-         <p> <?php echo nl2br($data_comment['post']); ?> </p>
+         <div id="text"> <p> <?php echo nl2br($data_comment['post']); ?> </p> </div>
          </div>
         <?php
         }
