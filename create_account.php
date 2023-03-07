@@ -1,16 +1,15 @@
 <?php
 session_start();
-if(isset($_SESSION['username'])) {
-  header('Location:home.php');
-}
+
 ?>
 
 <!DOCTYPE html>
+<html lang="fr">
 
-<html>
 
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GBAF-Inscription</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -19,6 +18,7 @@ if(isset($_SESSION['username'])) {
 
     <body>
     <?php include_once 'header.php'; ?>
+    <?php include 'dbb_connexion.php'; ?>
     <?php
       if(isset($_GET['reg_err']))
             {
@@ -57,20 +57,20 @@ if(isset($_SESSION['username'])) {
           <i class="fa fa-university" aria-hidden="true" style="color : red;"></i>
           Création d'un compte :
         </legend>
-          <input type="text" name="firstname" placeholder=" Prénom" required  />
-          <input type="text" name="name" placeholder=" Nom" required />
-          <input type="text" name="username" placeholder="Identifiant" required />
-          <input type="password" name="password" placeholder="Mot de passe" required/>
-          <input type="password" name="password_confirmation" placeholder="Confirmation du mot de passe" required />
-          <input list="secret_question" name="secret_question"placeholder="Choissisez une question secrète" required >
+          <input type="text" name="firstname" placeholder=" Prénom" required>
+          <input type="text" name="name" placeholder=" Nom" required>
+          <input type="text" name="username" placeholder="Identifiant" required>
+          <input type="password" name="password" placeholder="Mot de passe" required>
+          <input type="password" name="password_confirmation" placeholder="Confirmation du mot de passe" required>
+          <input list="secret_question" name="secret_question" placeholder="Choissisez une question secrète" required>
              <datalist id="secret_question" >
                <option value="Quel est le nom de votre ville natale ?">
                <option value="Quel est le nom de votre meilleur/e ami/e?">
                <option value="Quel est le nom de famille de votre professeur d’enfance préféré ?">
                <option value="Dans quelle ville se sont rencontrés vos parents? ">
              </datalist>
-          <input type="text" name="answer" placeholder=" Réponse à votre question secrète" required  />
-          <input type="submit" name="send" value="Valider" />
+          <input type="text" name="answer" placeholder=" Réponse à votre question secrète" required>
+          <input type="submit" name="send" value="Valider" >
 
           </fieldset>
          </form>
