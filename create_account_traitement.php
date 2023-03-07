@@ -21,16 +21,17 @@ if(!empty($_POST['firstname']) && !empty($_POST['name']) && !empty($_POST['usern
         {
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
-            $insert = $db->prepare('INSERT INTO account (nom, prenom, username, password, question, reponse) VALUES  (?, ?, ?, ?, ?, ?)');
+            $insert = $db->prepare('INSERT INTO account (nom, prenom, username, password, question, reponse) VALUES  (:nom, :prenom, :username, :password, :question, :reponse)');
             $insert->execute(array(
                 'nom' => $name,
-                'prenom' => $firstName,
+                'prenom' => $firstname,
                 'username' => $username,
-                'password' => $password,
+                'password' => $hash,
                 'question' => $secret_question,
                 'reponse' => $answer,
             ));
-            header('Location:create_account.php?reg_err=success');
+            header('Location:create_account.php?reg_err=success'); 
+
 
 
         }else header('Location: create_account.php?reg_err=password');
