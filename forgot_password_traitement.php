@@ -20,8 +20,6 @@ if(isset($_POST['username']) && isset($_POST['question']) && isset($_POST['repon
         {
             $_SESSION['id_user'] = $data['id_user'];
             $_SESSION['username'] = $data['username'];
-            //$_SESSION['question'] = $data['question'];
-            //$_SESSION['reponse'] = $data['reponse'];
             header('Location: forgot_password_new.php');
             
         
@@ -33,5 +31,5 @@ if(isset($_POST['username']) && isset($_POST['question']) && isset($_POST['repon
 }else header('Location: forgot_password.php');
 
 
-
+?>
 
