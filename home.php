@@ -1,12 +1,9 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
-
-<html>
+<html lang="fr">
 
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GBAF-Accueil</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -15,30 +12,24 @@ session_start();
 
 
     <body>
-    <header>
-        <a href="index.php" >
-        <img src="images/logo_gbaf.png" alt="Logo GBAF miniature" style= "margin-left: 0; width:45px;height:45px "/>
-        </a>
-    </header>
-
-    <section>
-        <div class="presentation_GBAF">
+    <?php include 'header_log.php' ; ?>
+    
+        <section id="presentation_gbaf">
         <h1>GBAF</h1>
         <p>
-           Le Groupement Banque Assurance FrançaisLe est le représentant de la profession bancaire et des assureurs sur tous les axes de la réglementation financière française. <br/>
-           Sa mission est de promouvoir l'activité bancaire à l’échelle nationale. C’est aussi un interlocuteur privilégié des pouvoirs publics.
-        </p>
-        <p>le GBAF souhaite proposer aux salariés des grands groupes français <strong> un point d’entrée unique </strong>, répertoriant un grand nombre d’informations sur les partenaires et acteurs du groupe ainsi que sur les produits et services bancaires et financiers. Chaque salarié pourra ainsi <strong> poster un commentaire et donner son avis </strong>. </p>
+           Le Groupement Banque Assurance Français est le représentant de la profession bancaire et des assureurs sur tous les axes de la réglementation financière française. <br>
 
-</div>
-        <img src="images/groupe_bancaire.jpg" alt="groupe bancaire" style="width:100%;height: 280px;filter: grayscale(100%);"/> 
-    </section>
+           Sa mission est de promouvoir l'activité bancaire à l’échelle nationale. C’est aussi un interlocuteur privilégié des pouvoirs publics.
+
+           le GBAF souhaite proposer aux salariés des grands groupes français <strong> un point d’entrée unique </strong>, répertoriant un grand nombre d’informations sur les partenaires et acteurs du groupe ainsi que sur les produits et services bancaires et financiers. Chaque salarié pourra ainsi <strong> poster un commentaire et donner son avis </strong>. </p>
+        
+        </section>
     
-    <hr/>
+    <hr>
 
 
     <section>
-    <div class="description_partners">
+    <div class="partners">
     <h2>Nos partenaires</h2>
     <p> Le GBAF est une fédération représentant les 6 grands groupes français :</p>
         <ul>
@@ -48,8 +39,9 @@ session_start();
                 <li> Société Générale  </li>
                 <li> Crédit Agricole </li>                  
                 <li> La Banque Postale </li> 
-                        
+                     
             </ul>
+    </div>         
 
             <?php include 'dbb_connexion.php'; ?>
             <?php
@@ -58,21 +50,29 @@ session_start();
             $actorsQuery ->execute();
             $actors =  $actorsQuery ->fetchAll();
         
-               foreach ($actors as $actor) {
+               foreach ($actors as $actor){
             ?>
+    <div class="partners_description">
+        <div class="one">
+                  <div id="logo">
+                  <img  src="<?php echo $actor['logo']; ?> " alt= "Logo partenaires" id="photo_logo" ?>
+                  </div>
 
-                  <img src="<?php echo $actor['logo']; ?>" alt= "Logo partenaires" ?>
-                  <h3> <?php echo $actor['acteur'];?> </h3>
-                  <p><?php echo substr ($actor['description'], 0, 200);?>...</p>
-
-                  <a href="actor.php?id=<?php echo $actor['id_acteur'];?>">Lire la suite</a>
-
+                  <div id="content">
+                  <h3><?php echo $actor['acteur'];?></h3> 
+                  <p><?php echo substr ($actor['description'], 0,155);?>...</p>
+                  </div>
+                  <div id="more">
+                  <span> <a class="aa" href="actor.php?id=<?php echo $actor['id_acteur'];?>">Lire la suite</a></span>
+                  </div>
+        </div>
+    </div>          
 
 
            <?php
            }
            ?>
-        
+    
     </section>
 
     
