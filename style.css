@@ -111,7 +111,7 @@ h2{
     font-size: 23px;
     margin-top:20px;
     padding-left: 60px;
-    font-family: 'open_sansregular', Arial, sans-serif;
+    font-family:  'open_sansregular', Arial, sans-serif;
 }
 .partners p {
     font-family:  'open_sansregular', Arial, sans-serif;
@@ -131,7 +131,7 @@ ul {
 .partners_description{
     background-color:  #dddddd;
 }
-.all{
+.one{
     display: flex;
     width: 100%;
     justify-content: SPACE-BETWEEN;
@@ -188,15 +188,15 @@ ul {
 #actor_details h2{
     padding-left: 30px;
     padding-top: 10px;
-    font-family: 'open_sansregular', Arial, sans-serif;
+    font-family:  'open_sansregular', Arial, sans-serif;
     color: #323232;
 }
 
 #comments_container{
-    background-color: #dddddd;
+    
     padding: 5px;
     border-radius: 20px;
-    border: 3px groove red;
+    border: 3px solid black;
     width: auto;
 }
 .comments_number{
@@ -213,31 +213,39 @@ h4{
 
 
 .new_comments a {
-    width: 58px;
+    width: 100px;
     height: 50px;
     border-radius: 7px;
     display: flex;
     text-decoration: none;
-    background-color: gray;
     text-align: center;
-    padding-left: 60%;
     margin-top: -55px;
+    border: 1px groove red;
     align-items: center;
-    justify-content: flex-end;
+    
 }
 .new_comments{
-    width: 70px;
     display: flex;
-    padding-left: 60%;
+    MARGIN-LEFT: 60%;
     justify-content: space-between;
     
-
+    
 }
-.new_comments a:active {
-     color: whitesmoke;
+
+.already_comments{
+    display: flex;
+    background-color:#dddddd;
+    width: 25%;
+    height: 50px;
+    border-radius: 7px;
+    justify-content: center;
+    align-items: center;
+    MARGIN-LEFT: 50%;
+    MARGIN-TOP: -57px;
+    margin-bottom: 1%;
+    text-align: center;
 }
 .like , .dislike, .vote_count{
-    /* color: black; */
     float: right;
     margin: 5px;
     margin-top: -20px;
@@ -247,7 +255,7 @@ h4{
 .votes{
     display: flex;
 	justify-content: flex-end;
-	height: 35x;
+	height:35px;
 	width: auto;
     margin-top: -25px;
     margin-right: 20px;
@@ -261,15 +269,38 @@ h4{
     padding: 10px;
    
 }
+.other_comments p {
+    font-family: 'open_sansregular', Arial, sans-serif ;
+}
+#text{
+    line-height: 2em;
+}
 
+#message{
+    resize: none;
+    width: 100%;
+    
+}
+div textarea{
+    box-sizing: border-box;
+    max-width: 100%;
+}
 
 footer{
+    /* transform : translate(10px, 215px); */
+    border-top: 3px groove red;
+    margin-top: 27px;
+    padding: 40px;
+    font-size: 15px;
+    font-family: 'open_sansregular', Arial, sans-serif;
+    background-color: #dddddd; 
     text-align: center;
-    transform : translate(10px, 215px)
+
 }
+
     
 @media all and (max-width:768px){
-    .all{
+    .one{
         display: block;
     }
     #logo{
@@ -277,5 +308,62 @@ footer{
     }
     #content{
         width: 100%;
+        margin-left: 0px;
     }
+    
+    header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    
     }
+   
+    .logomin{
+        display: block;
+        width: auto;
+        padding-top: 15px;
+        
+    }
+   
+    .rightheader{
+        display: flex;
+        align-items: center;
+        text-align: right;
+        width: auto
+
+    }
+    #actor_details img {
+        padding-top: 25px;
+        
+    }
+    #actor_details  p {
+        padding-left: 0;
+    }
+    #data{
+        display: block;
+		margin: 12px 0 20px 0;
+    }
+    
+	.comments_number{
+        margin-bottom: 38px;
+		text-align: center;
+	}
+    .already_comments{
+        width: 49%;
+        height: 64px;
+        text-align: center;
+    }
+
+    .votes{
+        display: flex;
+        justify-content: flex-start;
+		width: auto;
+    }
+
+    }
+
+  
+
+
+       
