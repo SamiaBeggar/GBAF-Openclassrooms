@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
+<html lang="fr">
 
-<html>
 <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GBAF-Paramètres du compte</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -66,11 +66,11 @@ $data = $sql->fetch();
        Mon compte :
       </legend>
       <label>Prénom:</label>
-      <input type="text" name="firstname" value="<?php echo $data['prenom']; ?>"  required />
+      <input type="text" name="firstname" value="<?php echo $data['prenom']; ?>"  required>
       <label>Nom:</label>
-      <input type="text" name="name" value="<?php echo $data['nom']; ?>"  required />
+      <input type="text" name="name" value="<?php echo $data['nom']; ?>"  required>
       <label>Identifiant:</label>
-      <input type="text" name="username" value="<?php echo $data['username']; ?>" required   />
+      <input type="text" name="username" value="<?php echo $data['username']; ?>" required>
       <label>Question secrète:</label>
       <select name="secret_question" >
         <?php
@@ -90,12 +90,12 @@ $data = $sql->fetch();
         ?>
         <option <?=$selected;?> value="Dans quelle ville se sont rencontrés vos parents? ">Dans quelle ville se sont rencontrés vos parents? </option>
       </select>
-</br>
+<br>
       <label>Réponse:</label>
-      <input type="text" name="answer" value="<?php echo $data['reponse']; ?>" required/>
+      <input type="text" name="answer" value="<?php echo $data['reponse']; ?>" required>
       <label>Mot de passe:</label>
-      <input type="password" name="password" placeholder="Saisissez votre mot de passe pour confirmer les modifications" />
-      <input type="submit" name="send" value="ENREGISTRER LES MODIFICATIONS" />
+      <input type="password" name="password" placeholder="Saisissez votre mot de passe pour confirmer les modifications">
+      <input type="submit" name="send" value="ENREGISTRER LES MODIFICATIONS">
       </fieldset>
    </form>
 
