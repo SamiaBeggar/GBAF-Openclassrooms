@@ -1,15 +1,18 @@
 <?php
-session_start();
+
 include 'dbb_connexion.php';
 include 'header_log.php' ; 
+
 ?>
 
-<!DOCTYPE html>
 
-<html>
+<!DOCTYPE html>
+<html lang="fr">
+
 
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GBAF-Ajouter un commentaire</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -21,22 +24,30 @@ include 'header_log.php' ;
 
         <?php
         
-        if (isset($post)) {
-            $date = date('Y-m-d H:i:s');
-            $post = $_POST['post'];
-            $id_user= $_SESSION['id_user'];
+        if (isset($_GET['id'])){
             $id = $_GET['id'];
-         $sqlQuery= ('INSERT INTO post (id_user, id_acteur, date_add, post) VALUES (:id_user, :id_acteur, :date, :post)');
+        }
+        
+        if (isset($_POST['message'])) {
+            $post = $_POST['message'];
+            $date = date('Y-m-d H:i:s');
+            $id_user= $_SESSION['id_user'];
+            $id = $_POST['id'];
+         $sqlQuery= ('INSERT INTO post (id_user, id_acteur, date_add, post) VALUES (:id_user, :id_acteur, :date_comment, :post)');
          $newcomments=$db->prepare($sqlQuery);
          $newcomments->execute(array(
-            'id_user'=>$id_user,
-            'id_acteur'=>$id,
-            'date'=>$date,
-            'post'=>$post
+            'id_user'=> $id_user,
+            'id_acteur'=> $id,
+            'date_comment'=> $date,
+            'post'=> $post
          ));
+         
          header('Location: actor.php?id=' . $id);
         }
         ?>
+
+
+
 
 
 <form method="post" action="actor_comments_new.php">
@@ -45,7 +56,10 @@ include 'header_log.php' ;
      <i class="fa fa-university" aria-hidden="true" style="color : red;"></i>
      Ajoutez un commentaire professionnel et constructif:
     </legend>
-    <textarea id="post" name="post" rows="4" cols="74"></textarea>
+    <input type="hidden" name="id" value="<?php echo $id ?>">
+    <div>
+    <textarea id="message" name="message"  rows="4" cols="74" ></textarea>
+    </div>
     <input type="submit" value="Envoyer" />
 </fieldset>
 </form>
