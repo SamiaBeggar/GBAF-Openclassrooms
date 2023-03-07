@@ -3,11 +3,11 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-
-<html>
+<html lang="fr">
 
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GBAF-Mot de passe oublié</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon.ico.png">
@@ -34,10 +34,10 @@ session_start();
       else
       {
         $username =$_SESSION['username'];
-        //$hash = password_hash($new_password, PASSWORD_DEFAULT);
+        $hash = password_hash($new_password, PASSWORD_DEFAULT);
         $sqlQuery=('UPDATE account SET password = :password WHERE username = :username') ; 
         $update=$db->prepare ($sqlQuery);
-        $update->execute(array ('password'=> $new_password, 'username'=> $username));
+        $update->execute(array ('password'=> $hash, 'username'=> $username));
         echo 'Le mot de passe a été réinitialisé avec succès ' ;
       }
     
@@ -49,10 +49,9 @@ session_start();
      <i class="fa fa-university" aria-hidden="true" style="color : red;"></i>
      Réinitialiser votre mot de passe :
      </legend>
-     <input type="password" name="new_password" placeholder="Nouveau mot de passe" /> <br>
-     <input type="password" name="password_confirmation" placeholder="Confirmation du nouveau mot de passe"  /> <br>
-     <input type="submit" value="Envoyer" /><br><br>
-
+     <input type="password" name="new_password" placeholder="Nouveau mot de passe"> <br>
+     <input type="password" name="password_confirmation" placeholder="Confirmation du nouveau mot de passe"> <br>
+     <input type="submit" value="Envoyer"><br><br>
      </fieldset>
     </form>
 
