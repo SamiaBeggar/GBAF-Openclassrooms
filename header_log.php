@@ -1,6 +1,12 @@
 <?php
-session_start();
+
+if ( session_status () == PHP_SESSION_NONE) // if session status is none then start the session
+{
+     session_start();
+}
+
 ?>
+
 <header>
         
         <a href="home.php" class="logomin">
