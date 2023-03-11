@@ -1,3 +1,10 @@
+<?php
+ session_start();
+if(!isset($_SESSION['firstname']))
+header('Location: index.php');
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -44,9 +51,9 @@ if (isset($_POST['firstname']) && isset($_POST['name']) && isset($_POST['usernam
     'id' => $_SESSION['id_user']
   ));
 
-echo "<p> Les modifications ont été prises en compte ! </p>";
+ echo " Les modifications ont été prises en compte ! "; 
 
-}
+} 
 ?>
 
 
